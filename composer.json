@@ -1,0 +1,23 @@
+{
+    "name": "WFrancois/file-sharing",
+    "description": "A lightweight solution to share files",
+    "homepage": "https://github.com/WFrancois/file-sharing",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "François Wroblewski",
+            "email": "me@wisak.eu",
+            "homepage": "https://wisak.eu"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "slim/slim": "^3.1",
+        "slim/twig-view": "^2.2"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FileSharing\\": "app/"
+        }
+    }
+}
