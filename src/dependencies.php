@@ -13,3 +13,9 @@ $container['view'] = function ($c) {
 
     return $view;
 };
+
+$container['config'] = function ($c) {
+    $config = new \FileSharing\Service\Config(__DIR__ . '/../config/config.yaml');
+
+    return $config;
+};
