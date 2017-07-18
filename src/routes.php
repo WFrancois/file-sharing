@@ -12,6 +12,9 @@ $app->group('/config', function () {
     $this->get('/upload', \FileSharing\Controller\UploadController::class . ':uploadAction')->setName('uploadFile')
         ->add(new \FileSharing\Middleware\AuthMiddleware());
 
+    $this->post('/uploadAjax', \FileSharing\Controller\UploadController::class . ':uploadAjax')->setName('uploadAction')
+        ->add(new \FileSharing\Middleware\AuthMiddleware());
+
     $this->get('/logoff', \FileSharing\Controller\LoginController::class . ':logoffAction')->setName('logoff')
         ->add(new \FileSharing\Middleware\AuthMiddleware());
 });
