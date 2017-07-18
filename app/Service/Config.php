@@ -35,6 +35,11 @@ class Config
         return $this->config['username'] === $username && password_verify($password, $this->config['password']);
     }
 
+    public function isTokenValid(string $token)
+    {
+        return $this->config['token'] === $token;
+    }
+
     private function flush()
     {
         $newConfig = Yaml::dump($this->config);

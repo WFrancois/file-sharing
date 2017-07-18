@@ -8,7 +8,7 @@ Don't forget to adjust upload_max_filesize in ini.
 
 ## To Do
 - [x] Upload File Page
-- [ ] Upload File ShareX
+- [x] Upload File ShareX
 - [ ] Design
 - Parameters
     - [ ] Filesize limit

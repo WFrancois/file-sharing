@@ -42,7 +42,8 @@ class Util
         }
     }
 
-    public static function generateRandomString($length = 10) {
+    public static function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -50,5 +51,24 @@ class Util
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public static function getBaseUrl()
+    {
+        $baseUrl = '';
+
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+            $baseUrl .= 'https';
+        } else {
+            $baseUrl .= 'http';
+        }
+
+        $baseUrl .= '://';
+
+        $baseUrl .= $_SERVER['SERVER_NAME'];
+
+        $baseUrl .= ':' . $_SERVER['SERVER_PORT'];
+
+        return $baseUrl;
     }
 }
