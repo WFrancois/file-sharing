@@ -8,4 +8,10 @@ $app->get('/', function(\Slim\Http\Request $request, \Slim\Http\Response $respon
 
 $app->group('/config', function () {
     $this->map(['GET', 'POST'], '/', \FileSharing\Controller\LoginController::class . ':initAction')->setName('initPage');
+
+    $this->get('/upload', \FileSharing\Controller\UploadController::class . ':uploadAction')->setName('uploadFile')
+        ->add(new \FileSharing\Middleware\AuthMiddleware());
+
+    $this->get('/logoff', \FileSharing\Controller\LoginController::class . ':logoffAction')->setName('logoff')
+        ->add(new \FileSharing\Middleware\AuthMiddleware());
 });

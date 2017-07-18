@@ -19,6 +19,22 @@ class LoginController extends BaseController
 
     private function login(Request $request, Response $response)
     {
+        if($request->getMethod() === 'POST') {
+            $username = $request->getParam('username');
+            $password = $request->getParam('password');
+
+            if(!empty($username) && !empty($password)) {
+                if($this->config->userValid($username, $password)) {
+                    $_SESSION['username'] = $username;
+                    $_SESSION['logged'] = true;
+
+                    $url = $this->router->pathFor('uploadFile');
+                    return $response->withStatus(302)->withHeader('Location', $url);
+                }
+            }
+        }
+
+        return $this->view->render($response, 'login.html.twig');
     }
 
     private function defineUser(Request $request, Response $response)
@@ -36,5 +52,14 @@ class LoginController extends BaseController
         }
 
         return $this->view->render($response, 'initConfig.html.twig');
+    }
+
+    public function logoffAction(Request $request, Response $response)
+    {
+        unset($_SESSION['username']);
+        unset($_SESSION['logged']);
+
+        $url = $this->router->pathFor('initPage');
+        return $response->withStatus(302)->withHeader('Location', $url);
     }
 }

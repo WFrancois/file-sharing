@@ -30,6 +30,11 @@ class Config
         $this->flush();
     }
 
+    public function userValid(string $username, string $password) : bool
+    {
+        return $this->config['username'] === $username && password_verify($password, $this->config['password']);
+    }
+
     private function flush()
     {
         $newConfig = Yaml::dump($this->config);
