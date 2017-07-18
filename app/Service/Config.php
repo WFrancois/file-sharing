@@ -9,27 +9,30 @@ class Config
 {
     private $filePath = '';
 
+    private $config = [];
+
     public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
+        $this->config = $this->getFromFile();
     }
 
     public function userDefined()
     {
-        $config = $this->getFromFile();
-
-
-        return !empty($config['username']) && !empty($config['password']);
+        return !empty($this->config['username']) && !empty($this->config['password']);
     }
 
     public function setUser(string $username, string $password)
     {
-        $config = $this->getFromFile();
+        $this->config['username'] = $username;
+        $this->config['password'] = password_hash($password, PASSWORD_BCRYPT);
 
-        $config['username'] = $username;
-        $config['password'] = password_hash($password, PASSWORD_BCRYPT);
+        $this->flush();
+    }
 
-        $newConfig = Yaml::dump($config);
+    private function flush()
+    {
+        $newConfig = Yaml::dump($this->config);
         file_put_contents($this->filePath, $newConfig);
     }
 
