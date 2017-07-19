@@ -63,11 +63,15 @@ class UploadController extends BaseController
         $uploaddir = __DIR__ . '/../../public/f/';
 
         if (!is_dir($uploaddir)) {
-            throw new UploadFileException('Directory doesn\'t exist');
+            mkdir($uploaddir);
+
+            if (!is_writable($uploaddir)) {
+                throw new UploadFileException('Directory isn\'t writable.');
+            }
         }
 
         if (!is_writable($uploaddir)) {
-            throw new UploadFileException('Directory isn\'t writable.');
+            throw new UploadFileException('Directory doesn\'t exist');
         }
 
         do {
