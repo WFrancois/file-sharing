@@ -74,8 +74,15 @@ class UploadController extends BaseController
             throw new UploadFileException('Directory doesn\'t exist');
         }
 
+        $name = explode('.', basename($file['name']));
+        unset($name[0]);
+        $extension = implode('.', $name);
+        if(!empty($extension)) {
+            $extension = '.' . $extension;
+        }
+
         do {
-            $fileName = Util::generateRandomString(5) . '_' . basename($file['name']);
+            $fileName = Util::generateRandomString(10) . $extension;
         } while (file_exists($uploaddir . $fileName));
 
         if (move_uploaded_file($file['tmp_name'], $uploaddir . $fileName)) {

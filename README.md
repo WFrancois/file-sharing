@@ -9,8 +9,10 @@ Don't forget to adjust upload_max_filesize in ini.
 ## To Do
 - [x] Upload File Page
 - [x] Upload File ShareX
+- [ ] Fix permission on clone
 - [ ] Design
 - Parameters
     - [ ] Filesize limit
     - [ ] Reset Token ShareX
     - [ ] File extension allowed
+    - [ ] Minify all name
