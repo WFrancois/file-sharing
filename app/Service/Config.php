@@ -74,7 +74,7 @@ class Config
         return $this->config['maxFileSize'] ?? 256;
     }
 
-    public function setMaxFileSize(int $size): void
+    public function setMaxFileSize(int $size)
     {
         $this->config['maxFileSize'] = $size;
 
