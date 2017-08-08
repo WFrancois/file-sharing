@@ -1,15 +1,8 @@
 {% extends 'components/base.html.twig' %}
-{% block stylesheets %}
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
-    <div class="fileUpload"></div>
+    <h1 class="page-header">Upload File</h1>
+    <div class="help-block">Drag&Drop to upload a file</div>
+    <div class="js--file-upload"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -22,12 +15,22 @@
                 previewsContainer: false
             });
 
+            var fileUpload = $('.js--file-upload');
+
             dropzone.on('error', function(file, errorMessage, xhr) {
-                $('.fileUpload').append(xhr.statusText + '<br />');
+                if(xhr && xhr.statusText) {
+                    fileUpload.prepend('<strong>' + file.name + ':</strong> ' + xhr.statusText + '<br />');
+                } else {
+                    fileUpload.prepend('<strong>' + file.name + ':</strong> Error: ' + errorMessage + '<br />');
+                }
             });
 
             dropzone.on("success", function(file, response) {
-                $('.fileUpload').append('File created: <a href="' + response.url + '">Link</a><br />');
+                fileUpload.prepend('<strong>' + file.name + ':</strong> File created <input class="js--select-input" value="' + response.url + '"><br />');
+            });
+
+            fileUpload.on('click', '.js--select-input', function(e) {
+                $(this).select();
             });
         });
     </script>
