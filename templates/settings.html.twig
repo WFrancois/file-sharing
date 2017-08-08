@@ -7,14 +7,22 @@
 
 {% block javascripts %}
     <script>
+        var tokenInput = $('.js--token');
         $('.js--generate-new-token').on('click', function(e) {
             e.preventDefault();
+
+            if(tokenInput.val() !== '') {
+                if(!confirm('Are you sure you want to reset the API Token ?')) {
+                    return;
+                }
+            }
+
             $.post('{{ generateToken }}', function(data) {
-                $('.js--token').val(data.token);
+                tokenInput.val(data.token);
             });
         });
 
-        $('.js--token').click(function(){
+        tokenInput.click(function(){
             $(this).select();
         });
     </script>
