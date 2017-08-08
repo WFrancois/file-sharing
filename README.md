@@ -13,6 +13,6 @@ Don't forget to adjust upload_max_filesize in ini.
 - [ ] Design
 - Parameters
     - [ ] Filesize limit
-    - [ ] Reset Token ShareX
+    - [x] Reset Token ShareX
     - [ ] File extension allowed
-    - [ ] Minify all name
+    - [x] Minify all name

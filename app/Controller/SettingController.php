@@ -19,6 +19,8 @@ class SettingController extends BaseController
         return $this->view->render($response, 'settings.html.twig', [
             'token' => $this->config->getToken(),
             'generateToken' => $this->router->pathFor('generateToken'),
+            'keepFileName' => $this->config->keepFileName(),
+            'changeKeepFileName' => $this->router->pathFor('changeKeepFileName'),
         ]);
     }
 
@@ -27,5 +29,12 @@ class SettingController extends BaseController
         $this->config->resetToken();
 
         return $response->withJson(['token' => $this->config->getToken()]);
+    }
+
+    public function changeKeepFileName(Request $request, Response $response)
+    {
+        $this->config->setKeepFileName($request->getParam('keepFileName', false) == 'true');
+
+        return $response->withJson(['keepFileName' => $this->config->keepFileName()]);
     }
 }

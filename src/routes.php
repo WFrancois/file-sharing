@@ -17,6 +17,8 @@ $app->group('/settings', function() {
     $this->get('', \FileSharing\Controller\SettingController::class . ':editSettingsAction')->setName('editSetting');
 
     $this->post('/generateToken', \FileSharing\Controller\SettingController::class . ':generateToken')->setName('generateToken');
+
+    $this->post('/changeKeepFileName', \FileSharing\Controller\SettingController::class . ':changeKeepFileName')->setName('changeKeepFileName');
 })
     ->add(new \FileSharing\Middleware\AuthMiddleware());
 

@@ -3,6 +3,7 @@
 {% block content %}
     <h1>Settings</h1>
     <p><label for="token">Token:</label> <input class="js--token" id="token" readonly value="{{ token }}"> <a href="#" class="js--generate-new-token">Generate new</a></p>
+    <p><label><input type="checkbox" class="js--change-keep-file-name" {% if keepFileName %}checked{% endif %}> Keep the original name of the file</label></p>
 {% endblock %}
 
 {% block javascripts %}
@@ -19,6 +20,16 @@
 
             $.post('{{ generateToken }}', function(data) {
                 tokenInput.val(data.token);
+            });
+        });
+
+        $('.js--change-keep-file-name').on('change', function(e) {
+            $.post('{{ changeKeepFileName }}', {keepFileName: $(this).is(':checked') }, function(data) {
+                if(data.keepFileName) {
+                    $(this).attr('checked', true);
+                } else {
+                    $(this).attr('checked', false);
+                }
             });
         });
 

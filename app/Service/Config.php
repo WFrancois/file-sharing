@@ -30,12 +30,12 @@ class Config
         $this->flush();
     }
 
-    public function userValid(string $username, string $password) : bool
+    public function userValid(string $username, string $password): bool
     {
         return $this->config['username'] === $username && password_verify($password, $this->config['password']);
     }
 
-    public function getToken() : string
+    public function getToken(): string
     {
         return $this->config['token'] ?? '';
     }
@@ -53,18 +53,34 @@ class Config
         return $this->getToken() === $token;
     }
 
+    public function keepFileName(): bool
+    {
+        if (empty($this->config['keepFileName'])) {
+            return false;
+        }
+
+        return (bool) $this->config['keepFileName'];
+    }
+
+    public function setKeepFileName(bool $val)
+    {
+        $this->config['keepFileName'] = $val;
+
+        $this->flush();
+    }
+
     private function flush()
     {
         $newConfig = Yaml::dump($this->config);
         file_put_contents($this->filePath, $newConfig);
     }
 
-    private function getFromFile() : array
+    private function getFromFile(): array
     {
-        if(file_exists($this->filePath)) {
+        if (file_exists($this->filePath)) {
             $yaml = Yaml::parse(file_get_contents($this->filePath));
 
-            if($yaml) {
+            if ($yaml) {
                 return $yaml;
             }
         }

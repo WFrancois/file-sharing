@@ -75,6 +75,7 @@ class UploadController extends BaseController
         }
 
         $name = explode('.', basename($file['name']));
+        $baseName = $name[0];
         unset($name[0]);
         $extension = implode('.', $name);
         if(!empty($extension)) {
@@ -82,7 +83,11 @@ class UploadController extends BaseController
         }
 
         do {
-            $fileName = Util::generateRandomString(10) . $extension;
+            if($this->config->keepFileName()) {
+                $fileName = Util::generateRandomString(5) . '_' . $baseName . $extension;
+            } else {
+                $fileName = Util::generateRandomString(10) . $extension;
+            }
         } while (file_exists($uploaddir . $fileName));
 
         if (move_uploaded_file($file['tmp_name'], $uploaddir . $fileName)) {
