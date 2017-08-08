@@ -11,6 +11,10 @@ class LoginController extends BaseController
     public function initAction(Request $request, Response $response)
     {
         if($this->config->userDefined()) {
+            if(!empty($_SESSION['logged'])) {
+                $url = $this->router->pathFor('uploadFile');
+                return $response->withStatus(302)->withHeader('Location', $url);
+            }
             return $this->login($request, $response);
         } else {
             return $this->defineUser($request, $response);

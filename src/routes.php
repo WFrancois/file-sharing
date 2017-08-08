@@ -12,6 +12,14 @@ $app->post('/uploadAjax', \FileSharing\Controller\UploadController::class . ':up
 $app->get('/logoff', \FileSharing\Controller\LoginController::class . ':logoffAction')->setName('logoff')
     ->add(new \FileSharing\Middleware\AuthMiddleware());
 
+
+$app->group('/settings', function() {
+    $this->get('', \FileSharing\Controller\SettingController::class . ':editSettingsAction')->setName('editSetting');
+
+    $this->post('/generateToken', \FileSharing\Controller\SettingController::class . ':generateToken')->setName('generateToken');
+})
+    ->add(new \FileSharing\Middleware\AuthMiddleware());
+
 $app->group('/api', function() {
     $this->post('/sharex', \FileSharing\Controller\UploadController::class . ':uploadApiAction')->setName('uploadSharex');
 })->add(new \FileSharing\Middleware\ApiMiddleware($app));

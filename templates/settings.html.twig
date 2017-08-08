@@ -1,0 +1,21 @@
+{% extends 'components/base.html.twig' %}
+
+{% block content %}
+    <h1>Settings</h1>
+    <p><label for="token">Token:</label> <input class="js--token" id="token" readonly value="{{ token }}"> <a href="#" class="js--generate-new-token">Generate new</a></p>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.js--generate-new-token').on('click', function(e) {
+            e.preventDefault();
+            $.post('{{ generateToken }}', function(data) {
+                $('.js--token').val(data.token);
+            });
+        });
+
+        $('.js--token').click(function(){
+            $(this).select();
+        });
+    </script>
+{% endblock %}

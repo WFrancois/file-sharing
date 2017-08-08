@@ -35,9 +35,22 @@ class Config
         return $this->config['username'] === $username && password_verify($password, $this->config['password']);
     }
 
+    public function getToken() : string
+    {
+        return $this->config['token'] ?? '';
+    }
+
+    public function resetToken()
+    {
+        $token = Util::generateRandomString($length = 20, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$!%#@&');
+        $this->config['token'] = $token;
+
+        $this->flush();
+    }
+
     public function isTokenValid(string $token)
     {
-        return $this->config['token'] === $token;
+        return $this->getToken() === $token;
     }
 
     private function flush()
