@@ -12,7 +12,8 @@
             var dropzone = new Dropzone(document.body, {
                 url: '{{ routeUpload }}',
                 clickable: false,
-                previewsContainer: false
+                previewsContainer: false,
+                maxFilesize: {{ maxFileSize }}
             });
 
             var fileUpload = $('.js--file-upload');

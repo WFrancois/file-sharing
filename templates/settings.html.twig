@@ -4,6 +4,8 @@
     <h1 class="page-header">Settings</h1>
     <p><label for="token">Token:</label> <input class="js--token" id="token" readonly value="{{ token }}"> <a href="#" class="js--generate-new-token">Generate new</a></p>
     <p><label><input type="checkbox" class="js--change-keep-file-name" {% if keepFileName %}checked{% endif %}> Keep the original name of the file</label></p>
+    <p><label for="maxFileSize">Max file size:</label> <input type="number" min="0" class="js--max-file-size" id="maxFileSize" value="{{ maxFileSize }}"> MiB <span class="js--progress-file-size"></span></p>
+    <div class="help-block js--help-size"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -23,6 +25,10 @@
             });
         });
 
+        tokenInput.click(function(){
+            $(this).select();
+        });
+
         $('.js--change-keep-file-name').on('change', function(e) {
             $.post('{{ changeKeepFileName }}', {keepFileName: $(this).is(':checked') }, function(data) {
                 if(data.keepFileName) {
@@ -33,8 +39,20 @@
             });
         });
 
-        tokenInput.click(function(){
-            $(this).select();
+        var timeout;
+        var progressFileSize = $('.js--progress-file-size');
+        $('.js--max-file-size').on('input', function(e) {
+            var input = $(this);
+            progressFileSize.html('<i class="fa fa-spinner fa-spin text-info"></i>');
+
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+                $.post('{{ changeMaxFileSize }}', {maxFileSize: input.val()}, function(data) {
+                    input.val(data.maxFileSize);
+                    progressFileSize.html('<i class="fa fa-check text-success"></i>');
+                    $('.js--help-size').text('This setting only affects the drop-zone. Remember to update the php.ini config on post_max_size as well as upload_max_filesize');
+                });
+            }, 1000);
         });
     </script>
 {% endblock %}

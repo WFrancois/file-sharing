@@ -21,6 +21,8 @@ class SettingController extends BaseController
             'generateToken' => $this->router->pathFor('generateToken'),
             'keepFileName' => $this->config->keepFileName(),
             'changeKeepFileName' => $this->router->pathFor('changeKeepFileName'),
+            'maxFileSize' => $this->config->getMaxFileSize(),
+            'changeMaxFileSize' => $this->router->pathFor('changeMaxFileSize'),
         ]);
     }
 
@@ -36,5 +38,12 @@ class SettingController extends BaseController
         $this->config->setKeepFileName($request->getParam('keepFileName', false) == 'true');
 
         return $response->withJson(['keepFileName' => $this->config->keepFileName()]);
+    }
+
+    public function changeMaxFileSize(Request $request, Response $response)
+    {
+        $this->config->setMaxFileSize((int) $request->getParam('maxFileSize', 256));
+
+        return $response->withJson(['maxFileSize' => $this->config->getMaxFileSize()]);
     }
 }

@@ -19,6 +19,8 @@ $app->group('/settings', function() {
     $this->post('/generateToken', \FileSharing\Controller\SettingController::class . ':generateToken')->setName('generateToken');
 
     $this->post('/changeKeepFileName', \FileSharing\Controller\SettingController::class . ':changeKeepFileName')->setName('changeKeepFileName');
+
+    $this->post('/changeMaxFileSize', \FileSharing\Controller\SettingController::class . ':changeMaxFileSize')->setName('changeMaxFileSize');
 })
     ->add(new \FileSharing\Middleware\AuthMiddleware());
 

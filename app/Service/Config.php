@@ -69,6 +69,18 @@ class Config
         $this->flush();
     }
 
+    public function getMaxFileSize(): int
+    {
+        return $this->config['maxFileSize'] ?? 256;
+    }
+
+    public function setMaxFileSize(int $size): void
+    {
+        $this->config['maxFileSize'] = $size;
+
+        $this->flush();
+    }
+
     private function flush()
     {
         $newConfig = Yaml::dump($this->config);

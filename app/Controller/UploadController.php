@@ -22,6 +22,7 @@ class UploadController extends BaseController
 
         return $this->view->render($response, 'upload.html.twig', [
             'routeUpload' => $url,
+            'maxFileSize' => $this->config->getMaxFileSize(),
         ]);
     }
 
