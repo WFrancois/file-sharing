@@ -12,7 +12,6 @@ Don't forget to adjust upload_max_filesize in ini.
 - [ ] Fix permission on clone
 - [ ] Design
 - Parameters
-    - [ ] Filesize limit
     - [x] Reset Token ShareX
     - [ ] File extension allowed
     - [x] Minify all name
