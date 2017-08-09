@@ -55,8 +55,10 @@ class Util
     public static function getBaseUrl()
     {
         $baseUrl = '';
+        $https = false;
 
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+            $https = true;
             $baseUrl .= 'https';
         } else {
             $baseUrl .= 'http';
@@ -66,7 +68,11 @@ class Util
 
         $baseUrl .= $_SERVER['SERVER_NAME'];
 
-        $baseUrl .= ':' . $_SERVER['SERVER_PORT'];
+        $port = $_SERVER['SERVER_PORT'];
+
+        if(!(($https && $port === '443') || (!$https && $port === '80'))) {
+            $baseUrl .= ':' . $_SERVER['SERVER_PORT'];
+        }
 
         return $baseUrl;
     }
